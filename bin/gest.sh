@@ -27,30 +27,47 @@
 # -nt 判断file1是否比file2新  [ "/data/file1" -nt "/data/file2" ]
 # -ot 判断file1是否比file2旧  [ "/data/file1" -ot "/data/file2" ]
 
-outputdir=dist
 printStr=""
-indexDir="$PWD/*.gif"
-echo $indexDir
+outputDir="/Users/frankie/Desktop/gif-test/dist"
+# indexDir="$PWD/*.gif"
 
-for file in /Users/frankie/Desktop/gif-test/*.gif; do
+for file in /Users/frankie/Desktop/gif-test/end/*.gif; do
   if [ -f $file ]; then
-    # source_file=$file
-    target_file="$(dirname $file)/$outputdir/$(basename "$file")"
+    source_file=$file
+    target_file="$outputDir/$(basename "$file")"
 
-    if [ ! -d $outputdir ]; then
-      mkdir $outputdir
+    if [ ! -d $outputDir ]; then
+      mkdir $outputDir
     fi
 
+    # 查看图片信息
     # ffmpeg -i $file
+
+    # 图片字节数
     # echo $(wc $file | awk '{print $3}')
-    # gifsicle $file -O3 --colors 256 -o $target_file
-    gifsicle $file -O3 --lossy -o $target_file
 
-    source_size=$(wc $file | awk '{print $3}')
-    target_size=$(wc $target_file | awk '{print $3}')
-    change_size_kb=$((($source_size - $target_size) / 1024))
+    # 效果不明显，1% ~ 2%
+    # gifsicle $source_file -o $target_file -O3
 
-    printStr="$printStr\n\n$file:\nBefore Size: $source_size\nAfter size: $target_size\nChange size: "$change_size_kb"Kb"
+    # 效果较明显，有 12% ~ 13%
+    gifsicle $source_file -o $target_file -O3 --lossy
+
+    source_size_byte=$(wc $source_file | awk '{print $3}')
+    target_size_byte=$(wc $target_file | awk '{print $3}')
+
+    source_size_kb=$(echo "scale=4; $source_size_byte / 1024" | bc)
+    target_size_kb=$(echo "scale=4; $target_size_byte / 1024" | bc)
+
+    change_size_byte=$(($source_size_byte - $target_size_byte))
+    change_size_kb=$(echo "scale=4; $change_size_byte / 1024" | bc)
+    change_size_per=$(echo "scale=2; $change_size_byte / $source_size_byte * 100" | bc)
+
+    printStr="$printStr\n\n
+    $source_file:\n
+    原图: $source_size_kb KB\n
+    修改: $target_size_kb KB\n
+    变化: $change_size_kb KB\n
+    变化百分比: $change_size_per%"
   fi
 done
 
