@@ -1,17 +1,19 @@
 #!/usr/bin/env bash
 
+set -e
+
 function main() {
-  local printStr=""
-  local outputDir="/Users/frankie/Desktop/gif-test/dist"
-  # indexDir="$PWD/*.gif"
+  local print_str=""
+  local output_dir="/Users/frankie/Desktop/gif-test/dist"
+  # index_dir="$PWD/*.gif"
 
   for file in /Users/frankie/Desktop/gif-test/end/*.gif; do
     if [ -f "$file" ]; then
       source_file=$file
-      target_file="$outputDir/$(basename "$file")"
+      target_file="$output_dir/$(basename "$file")"
 
-      if [ ! -d $outputDir ]; then
-        mkdir $outputDir
+      if [ ! -d $output_dir ]; then
+        mkdir $output_dir
       fi
 
       # 查看图片信息
@@ -29,16 +31,14 @@ function main() {
       source_size_byte=$(wc "$source_file" | awk '{print $3}')
       target_size_byte=$(wc "$target_file" | awk '{print $3}')
 
-      source_size_kb=$(echo "scale=4; $source_size_byte / 1024" | bc)
-      target_size_kb=$(echo "scale=4; $target_size_byte / 1024" | bc)
+      source_size_kb=$(echo "scale=2; $source_size_byte / 1024" | bc)
+      target_size_kb=$(echo "scale=2; $target_size_byte / 1024" | bc)
 
       change_size_byte=$((source_size_byte - target_size_byte))
-      change_size_kb=$(echo "scale=4; $change_size_byte / 1024" | bc)
+      change_size_kb=$(echo "scale=2; $change_size_byte / 1024" | bc)
       change_size_per=$(echo "scale=2; $change_size_byte / $source_size_byte * 100" | bc)
 
-      echo "$change_size_byte"
-
-      printStr="$printStr\n\n
+      print_str="$print_str\n\n
       $source_file:\n
       原图: $source_size_kb KB\n
       修改: $target_size_kb KB\n
@@ -47,7 +47,7 @@ function main() {
     fi
   done
 
-  echo -e "$printStr"
+  echo -e "$print_str"
 }
 
 main
