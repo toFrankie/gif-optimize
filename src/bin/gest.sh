@@ -16,10 +16,10 @@ function main() {
       fi
 
       # 查看图片信息
-      # ffmpeg -i $file
+      # ffprobe $source_file
 
       # 图片字节数
-      # echo $(wc $file | awk '{print $3}')
+      # echo $(wc $source_file | awk '{print $3}')
 
       # 效果不明显，减少 1% ~ 2%
       # gifsicle "$source_file" -o "$target_file" -O3
@@ -38,13 +38,13 @@ function main() {
       source_file_frame_num=$(gifsicle "$source_file" -I | head -n 1 | awk '{print $3}')
 
       # 抽去第一帧，降低 12% ~ 32%，但质量极差，猜测是原图经过压缩出来，将大部分不变的区域到放在了第一帧上面。
-      # 因此不建议抽调第一帧
+      # 因此不建议抽去第一帧
       # gifsicle "$source_file" -o "$target_file" --delete "#0"
 
       # 删除第二帧
       # gifsicle "$source_file" -o "$target_file" --delete "#1"
 
-      # 抽调奇数帧，降低 40% ~ 50%，导致速度加快的同时，而且动画很可能不衔接，可能质量较差
+      # 抽去奇数帧，降低 40% ~ 50%，导致速度加快的同时，而且动画很可能不衔接，可能质量较差
       gifsicle "$source_file" $(seq -f "#%g" 0 2 "$((source_file_frame_num - 1))") >"$target_file"
 
       # i=0
@@ -71,14 +71,14 @@ function main() {
 
       change_size_byte=$((source_size_byte - target_size_byte))
       change_size_kb=$(echo "scale=2; $change_size_byte / 1024" | bc)
-      change_size_per=$(echo "scale=2; $change_size_byte / $source_size_byte * 100" | bc)
+      change_size_perc=$(echo "scale=2; $change_size_byte / $source_size_byte * 100" | bc)
 
       print_str="$print_str\n\n
       $source_file:\n
       原图: $source_size_kb KB\n
-      修改后: $target_size_kb KB\n
+      处理后: $target_size_kb KB\n
       减少了: $change_size_kb KB\n
-      压缩比例: $change_size_per%"
+      压缩比例: $change_size_perc%"
     fi
   done
 
