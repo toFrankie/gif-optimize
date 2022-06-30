@@ -1,6 +1,6 @@
 {
-  "name": "my-simple-shell",
-  "version": "0.0.2",
+  "name": "simple-shell",
+  "version": "0.0.1",
   "repository": "git@github.com:toFrankie/simple-shell.git",
   "author": "Frankie <1426203851@qq.com>",
   "license": "MIT",

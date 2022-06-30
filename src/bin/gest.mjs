@@ -76,11 +76,12 @@ async function main() {
     const targetFile = path.resolve(ouputDir, filename) + ext
     const { stdout: sourceFileFrameNum } = await getAllFrameNum(sourceFile)
 
-    // 查看图片信息
+    // 图片信息信息
     // await $`ffprobe ${sourceFile}`
 
-    // 效果不明显，减少 1% ~ 2%
-    // await $`gifsicle ${sourceFile} -o ${targetFile} -O3`
+    // 效果不明显，减少 1% ~ 3%
+    // await $`gifsicle ${sourceFile} -o ${targetFile} -O2`
+    await $`gifsicle ${sourceFile} -o ${targetFile} -O3`
 
     // 效果明显，减少 12% ~ 14%
     // await $`gifsicle ${sourceFile} -o ${targetFile} --lossy`
@@ -95,9 +96,10 @@ async function main() {
     // const evenFrames = getEvenByRange(sourceFileFrameNum)
     // await $`gifsicle ${sourceFile} ${evenFrames} > ${targetFile}`
 
-    // 按比例抽去随机帧，压缩率还行。视乎抽取比例，输出质量说不准
-    const randomFrames = getRandomFrames(sourceFileFrameNum, 0.1)
-    await $`gifsicle ${sourceFile} ${randomFrames} > ${targetFile}`
+    // 按比例抽去随机帧（去掉第一帧），具体大小视乎抽取比例，输出质量不好说。以抽掉 10% 为例，降低了 8% ~ 30% 不等。
+    // const randomFrames = getRandomFrames(sourceFileFrameNum, 0.1)
+    // await $`gifsicle ${sourceFile} ${randomFrames} > ${targetFile}` // 减少 4% ~ 6%
+    // await $`gifsicle ${sourceFile} -O3 ${randomFrames} > ${targetFile}` // 减少 4% ~ 12%
 
     // before
     const { stdout: sourceSizeByte } = await $`wc ${sourceFile} | awk '{print $3}'`
