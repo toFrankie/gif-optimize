@@ -1,14 +1,17 @@
 {
-  "name": "simple-shell",
-  "version": "1.0.0",
+  "name": "my-simple-shell",
+  "version": "0.0.2",
   "repository": "git@github.com:toFrankie/simple-shell.git",
   "author": "Frankie <1426203851@qq.com>",
   "license": "MIT",
   "scripts": {
-    "start": "./src/bin/gest2.mjs"
+    "start": "zx ./src/bin/gest.mjs"
   },
   "bin": {
-    "gest2": "./bin/gest2.mjs"
+    "gest": "./src/bin/gest.mjs"
+  },
+  "publishConfig": {
+    "registry": "http://localhost:4873/"
   },
   "dependencies": {
     "zx": "^7.0.4"
