@@ -79,6 +79,8 @@ async function main() {
     // 图片信息信息
     // await $`ffprobe ${sourceFile}`
 
+    // 一些测试用例：
+
     // 效果不明显，减少 1% ~ 3%
     // await $`gifsicle ${sourceFile} -o ${targetFile} -O2`
     await $`gifsicle ${sourceFile} -o ${targetFile} -O3`
@@ -92,7 +94,7 @@ async function main() {
     // 效果明显，减少 20% ~ 30%，同时质量降低也较为明显
     // await $`gifsicle ${sourceFile} -o ${targetFile} -O3 --lossy=100`
 
-    // 抽去奇数帧
+    // 抽去奇数帧，输出质量不好
     // const evenFrames = getEvenByRange(sourceFileFrameNum)
     // await $`gifsicle ${sourceFile} ${evenFrames} > ${targetFile}`
 
