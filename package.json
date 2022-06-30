@@ -1,0 +1,16 @@
+{
+  "name": "simple-shell",
+  "version": "1.0.0",
+  "repository": "git@github.com:toFrankie/simple-shell.git",
+  "author": "Frankie <1426203851@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "./src/bin/gest2.mjs"
+  },
+  "bin": {
+    "gest2": "./bin/gest2.mjs"
+  },
+  "dependencies": {
+    "zx": "^7.0.4"
+  }
+}
