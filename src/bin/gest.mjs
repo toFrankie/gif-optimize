@@ -1,6 +1,6 @@
 #!/usr/bin/env zx
 
-const indexDir = '/Users/frankie/Desktop/gif-test/end'
+const inputDir = '/Users/frankie/Desktop/gif-test/input'
 const ouputDir = '/Users/frankie/Desktop/gif-test/dist'
 
 // 按目录以及扩展名查找文件
@@ -59,12 +59,12 @@ function getRandomFrames(range, perc = 0.1) {
 async function main() {
   const ext = '.gif'
 
-  if (!fs.existsSync(indexDir)) {
-    console.log(`--> error: 目录不存在 ${indexDir}`)
+  if (!fs.existsSync(inputDir)) {
+    console.log(`--> error: 目录不存在 ${inputDir}`)
     $`exit 1`
   }
 
-  const files = findFiles({ dir: indexDir, ext, recursive: false })
+  const files = findFiles({ dir: inputDir, ext, recursive: false })
 
   if (files.length && !fs.existsSync(ouputDir)) {
     await $`mkdir ${ouputDir}`
