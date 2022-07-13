@@ -5,10 +5,10 @@
   "author": "Frankie <1426203851@qq.com>",
   "license": "MIT",
   "scripts": {
-    "start": "zx ./src/bin/gest.mjs"
+    "start": "zx ./src/index.mjs"
   },
   "bin": {
-    "gest": "./src/bin/gest.mjs"
+    "gest": "./src/index.mjs"
   },
   "publishConfig": {
     "registry": "http://localhost:4873/"
