@@ -81,9 +81,21 @@ async function main() {
 
     // 一些测试用例：
 
+    // 移除扩展
+    // await $`gifsicle ${sourceFile} -o ${targetFile} --no-extensions --no-names`
+
+    // 将局部颜色改为全局颜色（对含有局部颜色表的图片效果还不错）
+    // await $`gifsicle ${sourceFile} -o ${targetFile} --colors=256`
+
+    // 减色
+    // await $`gifsicle --colors=128 ${sourceFile} -o ${targetFile}`
+
+    // 还原
+    // await $`gifsicle --unoptimize ${sourceFile} -o ${targetFile}`
+
     // 效果不明显，减少 1% ~ 3%
     // await $`gifsicle ${sourceFile} -o ${targetFile} -O2`
-    await $`gifsicle ${sourceFile} -o ${targetFile} -O3`
+    // await $`gifsicle ${sourceFile} -o ${targetFile} -O3`
 
     // 效果明显，减少 12% ~ 14%
     // await $`gifsicle ${sourceFile} -o ${targetFile} --lossy`
