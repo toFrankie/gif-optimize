@@ -2,6 +2,9 @@
 
 const inputDir = '/Users/frankie/Desktop/gif-test/input'
 const ouputDir = '/Users/frankie/Desktop/gif-test/dist'
+const ouputDir2 = '/Users/frankie/Desktop/gif-test/dist2'
+
+$.verbose = false
 
 // 按目录以及扩展名查找文件
 function findFiles({ dir, ext, recursive = true }) {
@@ -70,10 +73,15 @@ async function main() {
     await $`mkdir ${ouputDir}`
   }
 
+  if (files.length && !fs.existsSync(ouputDir2)) {
+    await $`mkdir ${ouputDir2}`
+  }
+
   let printStr = '\n\n'
   for (const sourceFile of files) {
     const filename = path.basename(sourceFile, ext)
     const targetFile = path.resolve(ouputDir, filename) + ext
+    const targetFile2 = path.resolve(ouputDir2, filename) + ext
     const { stdout: sourceFileFrameNum } = await getAllFrameNum(sourceFile)
 
     // 图片信息信息
@@ -112,8 +120,19 @@ async function main() {
 
     // 按比例抽去随机帧（去掉第一帧），具体大小视乎抽取比例，输出质量不好说。以抽掉 10% 为例，降低了 8% ~ 30% 不等。
     // const randomFrames = getRandomFrames(sourceFileFrameNum, 0.1)
-    // await $`gifsicle ${sourceFile} ${randomFrames} > ${targetFile}` // 减少 4% ~ 6%
-    // await $`gifsicle ${sourceFile} -O3 ${randomFrames} > ${targetFile}` // 减少 4% ~ 12%
+    // await $`gifsicle ${sourceFile} ${randomFrames} > ${targetFile}` // 减少 4% ~ 12%
+
+    // 按比例抽去随机帧（去掉第一帧）：先还原再抽
+    // const randomFrames = getRandomFrames(sourceFileFrameNum, 0.1)
+    // await $`gifsicle -U ${sourceFile} ${randomFrames} > ${targetFile}` // 减少 4% ~ 6%
+    // await $`gifsicle -U -O2 ${targetFile} > ${targetFile2}` // 减少 4% ~ 6%
+
+    // 抽掉指定帧（不还原），#3、#12、#20
+    await $`gifsicle ${sourceFile} --delete "#3" "#12" "#20" > ${targetFile}`
+
+    // 抽掉指定帧（先还原），#3、#12、#20
+    // await $`gifsicle -U ${sourceFile} --delete "#3" "#12" "#20" > ${targetFile}`
+    // await $`gifsicle -O2 ${targetFile} > ${targetFile2}`
 
     // before
     const { stdout: sourceSizeByte } = await $`wc ${sourceFile} | awk '{print $3}'`
