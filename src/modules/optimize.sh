@@ -9,7 +9,6 @@ function gif_optimize() {
   local all_input_file=() # 所有将要被优化的 GIF 文件
 
   echo ""
-  echo "🕒 正在处理中，请稍候..."
 
   # 1. 解析函数传入参数，并将对应 GIF 传入到 all_input_file 数组
   for input_param in "$@"; do
@@ -28,15 +27,19 @@ function gif_optimize() {
   done
   unset input_param
 
+  local all_input_file_count=${#all_input_file[@]}
+  if [ "$all_input_file_count" -eq 0 ]; then
+    echo '❌ 没有输入目录！'
+    return 0
+  fi
+
+  echo "🕒 正在处理中，请稍候..."
+
   # 2. 创建临时、输出目录
   local temp_dir="$OUTPUT/__TEMP"
   local output_dir="$OUTPUT"
-  if [ ! -d "$temp_dir" ]; then
+  if [ $(IS_DIRECTORY "$temp_dir") -eq 1 ]; then
     mkdir "$temp_dir"
-  fi
-
-  if [ ! -d "$output_dir" ]; then
-    mkdir "$output_dir"
   fi
 
   # 3. 遍历 all_input_file 数组

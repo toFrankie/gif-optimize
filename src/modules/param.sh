@@ -5,7 +5,7 @@
 function get_cli_param() {
   INPUT=()
   OUTPUT=''
-  FRAME_DRAW=''
+  # FRAME_DRAW=''
 
   while [[ $# -gt 0 ]]; do
     local key="$1"
@@ -16,21 +16,17 @@ function get_cli_param() {
       shift # past argument
       shift # past value
       ;;
-    -d | --frame-draw)
-      FRAME_DRAW="$2"
-      shift # past argument
-      shift # past value
-      ;;
+    # -d | --frame-draw)
+    #   FRAME_DRAW="$2"
+    #   shift # past argument
+    #   shift # past value
+    #   ;;
     *)
       INPUT+=("$1") # save it in an array for later
       shift         # past argument
       ;;
     esac
   done
-
-  if [ $(IS_DIRECTORY "$OUTPUT") -eq 1 ]; then
-    OUTPUT=$START_DIR
-  fi
 
   set -- "${INPUT[@]}" # restore positional parameters
 }

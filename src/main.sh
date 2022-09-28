@@ -19,21 +19,29 @@ source file.sh
 source param.sh
 source optimize.sh
 
-echo "入口参数：$*"
+# echo "入口参数：$*"
+
 # 解析参数
 get_cli_param "$@"
+
 # 解析输入
 parse_input "${INPUT[@]}"
 
+# 创建输出目录
+if [ -z "$OUTPUT" ]; then
+  OUTPUT=$START_DIR
+elif [ $(IS_DIRECTORY "$OUTPUT") -eq 1 ]; then
+  mkdir "$OUTPUT"
+fi
+
 # 执行优化
 gif_optimize "${INPUT[@]}"
-
 echo ""
-echo FILE INPUT = "${INPUT[*]}"
-echo FILE OUTPUT = "${OUTPUT}"
-echo FILE FRAME_DRAW = "${FRAME_DRAW}"
-echo "最终目录：${INPUT_DIRS[*]}"
-echo "最终文件：${INPUT_FILES[*]}"
+
+# echo ""
+# echo FILE INPUT = "${INPUT[*]}"
+# echo FILE OUTPUT = "${OUTPUT}"
+# echo FILE FRAME_DRAW = "${FRAME_DRAW}"
 
 # 检查参数
 # 1. INPUT 需为目录或文件，如缺省取当前目录；
