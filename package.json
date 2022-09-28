@@ -4,16 +4,12 @@
   "repository": "https://github.com/toFrankie/simple-shell",
   "author": "Frankie <1426203851@qq.com>",
   "license": "MIT",
-  "scripts": {
-    "start": "zx ./src/index.mjs"
-  },
+  "scripts": {},
   "bin": {
-    "gest": "./src/index.mjs"
+    "gg": "./src/main.sh"
   },
   "publishConfig": {
     "registry": "http://localhost:4873/"
   },
-  "dependencies": {
-    "zx": "^7.0.4"
-  }
+  "dependencies": {}
 }
