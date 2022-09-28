@@ -1,7 +1,7 @@
 {
-  "name": "simple-shell",
-  "version": "0.0.1",
-  "repository": "https://github.com/toFrankie/simple-shell",
+  "name": "gif-optimize",
+  "version": "1.0.0",
+  "repository": "https://github.com/toFrankie/gif-optimize",
   "author": "Frankie <1426203851@qq.com>",
   "license": "MIT",
   "scripts": {},

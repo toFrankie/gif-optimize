@@ -1,26 +1,24 @@
 # 说明
 
-测试脚本存放于 `src/bin/gest.mjs`，基于 [zx](https://github.com/google/zx) 编写。
+一个基于 [Gifsicle](https://www.lcdf.org/gifsicle/man.html)，可批量「无损压缩」 GIF 图片的 Shell 命令行工具。
 
-## 快速开始
+## 简单使用
 
-```shell
-# 安装相关图片处理工具
-$ brew install ffmpeg gifsicle
-```
+尽说基于 Shell 脚本编写，但为了便于安装，于是做成了 NPM 包形式。
 
 ```shell
-# 拉取代码
-$ git clone https://github.com/toFrankie/simple-shell.git
+# 全局安装
+$ npm i -g https://github.com/toFrankie/gif-optimize.git
 
-# 全局安装此包
-$ npm i -g <path/to/project>
-
-# 全局安装 zx
-$ npm i -g zx
-
-# 然后就可以全局使用 `gest` 命令了，即执行执行测试脚本
-$ gest
+# 使用
+$ gg <input-dir> -o <output-dir>
 ```
 
-目前脚本不是很「智能」，需要跟进实际去调整脚本中的 `indexDir`、`outputDir` 路径。执行脚本会对 `indexDir` 目录下 gif 执行对应的操作，然后输出到 `outputDir` 目录中。处理结果会在命令行中打印出来。
+由于没想到更合适的命名，暂定 CLI 命令为 `gg` 吧，可能多少有点随便哈。
+目前仅接受「输入」与「输出」两个参数，其中 `-o`、`--output` 表示输出目录（路径）。其余参数均表示输入目录（路径）。输入可以是目录或文件，若是目录，则会遍历目录下所有 GIF 文件（不含子目录）。
+
+![](./images/screenshot.png)
+
+## 其他
+
+> 注意，由于部分 GIF 经 Gifsicle 处理后，体积反而会变大，此时会将源文件输出。
