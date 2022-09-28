@@ -17,6 +17,7 @@ fi
 # 加载对应模块（@TODO: 模块名再修改下）
 source file.sh
 source param.sh
+source optimize.sh
 
 echo "入口参数：$*"
 # 解析参数
@@ -24,6 +25,10 @@ get_cli_param "$@"
 # 解析输入
 parse_input "${INPUT[@]}"
 
+# 执行优化
+gif_optimize
+
+echo ""
 echo FILE INPUT = "${INPUT[*]}"
 echo FILE OUTPUT = "${OUTPUT}"
 echo FILE FRAME_DRAW = "${FRAME_DRAW}"
