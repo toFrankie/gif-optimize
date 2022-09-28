@@ -26,7 +26,7 @@ get_cli_param "$@"
 parse_input "${INPUT[@]}"
 
 # 执行优化
-gif_optimize
+gif_optimize "${INPUT[@]}"
 
 echo ""
 echo FILE INPUT = "${INPUT[*]}"
